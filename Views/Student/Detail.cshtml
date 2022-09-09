@@ -1,0 +1,48 @@
+﻿@model List<StudentAddCertificationViewModel>
+
+@{
+    ViewBag.Title = "Detail Student";
+    ViewBag.lien = "Students";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-8">
+            <form method="post">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>@ViewBag.student</strong>
+                        <input hidden name="studentId" value="@ViewBag.studentId" class="form-control" />
+                    </div>
+                    <div class="card-body card-block">
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <input hidden asp-for="@Model[i].CertificationId" />
+                            <input hidden asp-for="@Model[i].libelle" />
+                            <div class="form-check">
+                                <input asp-for="@Model[i].IsSelected" id="@i" class="form-check-input" />
+                                <label for="@i" asp-for="@Model[i].IsSelected" class="form-check-label">@Model[i].sigle | @Model[i].libelle</label>
+                            </div>
+                            <label asp-for="@Model[i].dte"></label>
+                            <input class="form-control" asp-for="@Model[i].dte" />
+                            <hr />
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fa fa-check-circle"></i> Update Student
+                        </button>
+                        <a asp-action="Index" asp-controller="Student" class="btn btn-danger btn-sm">
+                            <i class="fa fa-reply"></i> back to List
+                        </a>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="col-sm-2"></div>
+    </div>
+</div>

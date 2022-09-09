@@ -1,0 +1,41 @@
+﻿@model CertificationEditViewModel
+
+@{
+    ViewBag.Title = "Delete Certification";
+    ViewBag.lien = "Certifications";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    Delete <strong class="card-title"> @Model.sigle</strong>
+                </div>
+                <form method="post">
+                    <div class="card-body">
+                        <div class="alert alert-warning">
+                            Some quick example text to build on the card title and make up the bulk of the card's
+                            content.
+                        </div>
+
+                        <input asp-for="certificationId" hidden />
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fa fa-check-circle"></i> Confirm Delete
+                            </button>
+                            <a asp-action="Index" asp-controller="Certification" class="btn btn-dark btn-sm">
+                                <i class="fa fa-reply"></i> Cancel
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm-2"></div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+﻿@model AccountRegisterViewModel
+
+
+@{
+    ViewBag.Title = "Register";
+    ViewBag.lien = "Register";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2"></div>
+
+        <div class="col-sm-8">
+            <div class="card">
+                <form asp-action="Register" asp-controller="Account" method="post" class="">
+                    <div class="card-header">
+                        <strong>Register</strong> New Account
+                    </div>
+                    <div class="card-body card-block">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label asp-for="FirstName" for="nf-email" class=" form-control-label"></label>
+                                    <input asp-for="FirstName" id="nf-email" class="form-control">
+                                    <span asp-validation-for="FirstName" class="text-sm-left text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label asp-for="LastName" class=" form-control-label"></label>
+                                    <input asp-for="LastName" class="form-control">
+                                    <span asp-validation-for="LastName" class="text-sm-left text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Email" for="nf-password" class=" form-control-label"></label>
+                            <input asp-for="Email" id="nf-password" class="form-control">
+                            <span asp-validation-for="Email" class="text-sm-left text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label asp-for="Password" for="nf-password" class=" form-control-label"></label>
+                                    <input asp-for="Password" id="nf-password" class="form-control">
+                                    <span asp-validation-for="Password" class="text-sm-left text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label asp-for="ConfirmPassword" for="nf-password" class=" form-control-label"></label>
+                                    <input asp-for="ConfirmPassword" id="nf-password" class="form-control">
+                                    <span asp-validation-for="ConfirmPassword" class="text-sm-left text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fa fa-check-circle"></i> Submit
+                        </button>
+                        <a asp-action="Index" asp-controller="Student" class="btn btn-danger btn-sm">
+                            <i class="fa fa-reply"></i> back to List
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm-2"></div>
+    </div>
+</div>

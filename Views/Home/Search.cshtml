@@ -1,0 +1,202 @@
+﻿@model IEnumerable<ResultSearchViewModel>
+
+@{
+    ViewData["Title"] = "Result";
+}
+
+<section class="welcome p-t-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="title-4">
+                    THE GECB CERTIFICATION REGISTRY
+                </h1>
+                <hr class="line-seprate">
+                <p>
+                    The GESB maintains an up-to-date registry of individuals who have earned one of its certifications. To verify a certification holder's status, simply enter an individual's Certification ID Number or name in the search field and a list of matches will be displayed. Make sure you have the correct spelling and full name for the certification holder you wish to find.<br />
+
+                    The Certification Registry applies to individuals who obtain and maintain their IIA certifications. Inclusion in the registry is voluntary, so not all certification holders may be listed
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <div class="card-body">
+                    <div class="default-tab">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+                                   aria-selected="true">First research method</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+                                   aria-selected="false">Second research method</a>
+                            </div>
+                        </nav>
+                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="card">
+                                    <form asp-action="Search" asp-controller="Home" method="get">
+                                        <div class="card-header">
+                                            SEARCH BY CERTIFICATION ID NUMBER
+                                        </div>
+                                        <div class="card-body card-block">
+                                            <input name="token" value="1" hidden  />
+                                            <div class="form-group">
+                                                <label class=" form-control-label">Certification ID</label>
+                                                <input name="ID" class="form-control">
+                                                @*<span asp-validation-for="certId" class="text-sm-left text-danger"></span>*@
+                                            </div>
+                                            <div>
+                                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                                    <i class="fa fa-search fa-lg"></i>&nbsp;
+                                                    <span id="payment-button-amount">Search</span>
+                                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="card">
+                                    <form asp-action="Search" method="get">
+                                        <div class="card-header">
+                                            SEARCH BY NAME
+                                        </div>
+                                        <div class="card-body card-block">
+                                            <input name="token" value="2" hidden />
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="nf-email" class=" form-control-label">First Name</label>
+                                                        <input required name="first" id="nf-email" class="form-control">
+                                                        @*<span asp-validation-for="FirstName" class="text-sm-left text-danger"></span>*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class=" form-control-label">Last Name</label>
+                                                        <input required name="last" class="form-control">
+                                                        @*<span asp-validation-for="LastName" class="text-sm-left text-danger"></span>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                                    <i class="fa fa-search fa-lg"></i>&nbsp;
+                                                    <span id="payment-button-amount">Search</span>
+                                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-1"></div>
+        </div>
+    </div>
+</section>
+
+
+
+
+@if (ViewBag.result == "empty")
+{
+    <div class="container">
+        <div class="alert alert-dark">
+            <strong>No student corresponds to research!</strong>
+        </div>
+    </div>
+}
+
+@if (ViewBag.result == "error")
+{
+    <div class="container">
+        <div class="alert alert-danger">
+            <strong>Error</strong>
+            Vous devez remplir les champs pour effectuer une recherche effective.
+        </div>
+    </div>
+}
+
+else if (ViewBag.result == "data")
+{
+    var count = Model.Count();
+    @if (count != 0)
+    {
+        <div class="container">
+            <div class="row">
+                
+                
+                <div class="col-sm-1"></div>
+
+                <div class="col-sm-10">
+                    <div class="alert alert-dark text-center">
+                        <strong>@ViewBag.libelle</strong>
+                    </div>
+                    <hr />
+                    <table id="example" class="table table-borderless table-data3" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Country</th>
+                                <th>Status</th>
+                                <th>Certified Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Country</td>
+                                <td>
+                                    @if (@item.status)
+                                    {
+                                        <span class="text-lg-center badge badge-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Inactive</span>
+                                    }
+                                </td>
+                                <td>@item.Date.ToString("dd MMMM yyyy")</td>
+                            </tr>
+
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Country</th>
+                                <th>Status</th>
+                                <th>Certified Date</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+    }
+}
+
+@section DataTables{
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+    <script src="~/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/jquery.dataTables.min.js"></script>
+}
+
