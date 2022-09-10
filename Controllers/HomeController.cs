@@ -46,22 +46,28 @@ namespace certificationRegister.Controllers
             if (!string.IsNullOrEmpty(last) || !string.IsNullOrEmpty(first) && ID == 0)
             {
                 List<ResultSearchViewModel> models = new List<ResultSearchViewModel>();
-                var result = await _bd.students.Where(s => s.FirstName.Contains(first) || s.LastName.Contains(last))
-                    .Include(s => s.CertificationsLink).ToListAsync();
+                var result = await _bd.students.Where(s => s.FirstName.Contains(first) || s.LastName.Contains(last) ||  s.FirstName.Contains(last) || s.LastName.Contains(first))
+                    .Include(s => s.CertificationsLink).ThenInclude(s => s.Certification)
+                    .ToListAsync();
                 if (result.Count != 0)
                 {
-                    foreach (var item in result)
+                    for (int i = 0; i < result.Count(); i++)
                     {
-                        var data = new ResultSearchViewModel()
+                        foreach (var item in result[i].CertificationsLink)
                         {
-                            Name = item.FirstName + " " + item.LastName,
-                            Country = item.Country,
-                            certification = item.CertificationsLink
-                            
-                        };
-                        models.Add(data);
+                            var data = new ResultSearchViewModel()
+                            {
+                                sigle = item.Certification.sigle,
+                                libelle = item.Certification.libelle,
+                                status = item.IsActive,
+                                Date = item.DateCertified,
+                                Country = result[i].Country,
+                                Name = result[i].FirstName+" "+ result[i].LastName
+                            };
+                            models.Add(data);
+                        }
                     }
-                    ViewBag.result = "data";
+                    ViewBag.result = "second method";
                     return View(models);
                 }
                 else

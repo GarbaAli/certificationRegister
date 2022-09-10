@@ -13,7 +13,6 @@ namespace certificationRegister.Models
     {
         public AppDbcontext(DbContextOptions<AppDbcontext> options): base(options)
         {
-
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

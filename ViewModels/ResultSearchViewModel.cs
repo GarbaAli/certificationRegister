@@ -13,5 +13,7 @@ namespace certificationRegister.ViewModels
         public IEnumerable<StudentCertification> certification { get; set; }
         public DateTime Date { get; set; }
         public bool status { get; set; }
+        public string sigle { get; set; }
+        public string libelle { get; set; }
     }
 }

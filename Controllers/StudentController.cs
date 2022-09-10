@@ -151,8 +151,7 @@ namespace certificationRegister.Controllers
                     var cert = await _app.certifications.Include(c => c.StudentsLink)
                         .SingleAsync(c => c.certificationId == model[i].CertificationId);
 
-                    //recuperer les donnees de la table ternaire
-                    var AddOrRemove = new StudentCertification()
+                    var data = new StudentCertification()
                     {
                         Student = student,
                         Certification = cert,
@@ -165,12 +164,13 @@ namespace certificationRegister.Controllers
                     //Detacher la certification a l'etudiant
                     if (IsJoin(model[i].CertificationId, studentId) && !model[i].IsSelected)
                     {
-                        student.CertificationsLink.Remove(AddOrRemove);
+                        //var linkremove = cert.StudentsLink.Where(s => s.StudId == studentId).FirstOrDefault();
+                        _app.Remove(data);
                         await _app.SaveChangesAsync();
                     }//Joindre la certification a l'etudiant
                     else if (!IsJoin(model[i].CertificationId, studentId) && model[i].IsSelected)
                     {
-                        student.CertificationsLink.Add(AddOrRemove);
+                        student.CertificationsLink.Add(data);
                         await _app.SaveChangesAsync();
                     }
                 }

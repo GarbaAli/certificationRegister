@@ -40,7 +40,7 @@
                                             SEARCH BY CERTIFICATION ID NUMBER
                                         </div>
                                         <div class="card-body card-block">
-                                            <input name="token" value="1" hidden  />
+                                            <input name="token" value="1" hidden />
                                             <div class="form-group">
                                                 <label class=" form-control-label">Certification ID</label>
                                                 <input name="ID" class="form-control">
@@ -127,15 +127,15 @@
     </div>
 }
 
-else if (ViewBag.result == "data")
+@if (ViewBag.result == "data")
 {
     var count = Model.Count();
     @if (count != 0)
     {
         <div class="container">
             <div class="row">
-                
-                
+
+
                 <div class="col-sm-1"></div>
 
                 <div class="col-sm-10">
@@ -155,21 +155,21 @@ else if (ViewBag.result == "data")
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr>
-                                <td>@item.Name</td>
-                                <td>@item.Country</td>
-                                <td>
-                                    @if (@item.status)
-                                    {
-                                        <span class="text-lg-center badge badge-success">Active</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge badge-danger">Inactive</span>
-                                    }
-                                </td>
-                                <td>@item.Date.ToString("dd MMMM yyyy")</td>
-                            </tr>
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Country</td>
+                                    <td>
+                                        @if (@item.status)
+                                        {
+                                            <span class="text-lg-center badge badge-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>@item.Date.ToString("dd MMMM yyyy")</td>
+                                </tr>
 
                             }
                         </tbody>
@@ -190,10 +190,80 @@ else if (ViewBag.result == "data")
     }
 }
 
+
+@if (ViewBag.result == "second method")
+{
+    var count = Model.Count();
+    @if (count != 0)
+    {
+        <div class="container">
+            <div class="row">
+
+
+                <div class="col-sm-1"></div>
+
+                <div class="col-sm-10">
+                    <hr />
+                    <table id="example1" class="table table-borderless table-data3" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Country</th>
+                                <th>Certification</th>
+                                <th>Designation</th>
+                                <th>Status</th>
+                                <th>Certified Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Country</td>
+                                <td>@item.sigle</td>
+                                <td>@item.libelle</td>
+                                <td>
+                                    @if (@item.status)
+                                    {
+                                        <span class="text-lg-center badge badge-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Inactive</span>
+                                    }
+                                </td>
+                                <td>@item.Date.ToString("dd MMMM yyyy")</td>
+                            </tr>
+
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Country</th>
+                                <th>Certification</th>
+                                <th>Designation</th>
+                                <th>Status</th>
+                                <th>Certified Date</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+    }
+}
+
 @section DataTables{
     <script>
         $(document).ready(function () {
             $('#example').DataTable();
+        });
+        $(document).ready(function () {
+            $('#example1').DataTable();
         });
     </script>
     <script src="~/js/dataTables.bootstrap4.min.js"></script>
