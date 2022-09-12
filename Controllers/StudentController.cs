@@ -1,6 +1,7 @@
 ﻿using certificationRegister.Models;
 using certificationRegister.Repositories;
 using certificationRegister.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace certificationRegister.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
         private readonly IRepository<Student> _bd;

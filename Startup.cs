@@ -32,11 +32,12 @@ namespace certificationRegister
             services.AddDbContextPool<AppDbcontext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             services.AddScoped < IRepository < Certification >, CertificationRepository >();
             services.AddScoped<IRepository<Student>, StudentRepository>();
-            //services.AddIdentity<AppUser, IdentityRole>(options => {
-            //    options.Password.RequiredLength = 5;
-            //    options.Password.RequireUppercase = false;
-            //    options.Password.RequireLowercase = false;
-            //}).AddEntityFrameworkStores<AppDbcontext>();
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 5;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            }).AddEntityFrameworkStores<AppDbcontext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +59,7 @@ namespace certificationRegister
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

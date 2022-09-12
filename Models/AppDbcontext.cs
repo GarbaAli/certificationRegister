@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace certificationRegister.Models
 {
-    public class AppDbcontext: DbContext
+    public class AppDbcontext : IdentityDbContext<AppUser>
     {
         public AppDbcontext(DbContextOptions<AppDbcontext> options): base(options)
         {
@@ -18,6 +19,7 @@ namespace certificationRegister.Models
         {
             modelBuilder.Entity<StudentCertification>()
                 .HasKey(x => new { x.StudId, x.CertId });
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Certification> certifications { get; set; }
